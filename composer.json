@@ -1,0 +1,32 @@
+{
+  "name": "lxz/examination",
+  "type": "app",
+  "description": "office",
+  "repositories": {
+    "packagist": {
+      "type": "composer",
+      "url": "https://mirrors.aliyun.com/composer/"
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "app"
+    },
+    "files": [
+      "app/Function/Functions.php"
+    ]
+
+  },
+  "license": "proprietary",
+  "require": {
+    "phpoffice/phpword": "^v0.14",
+    "phpoffice/phpspreadsheet": "1.16.0",
+    "symfony/console": "v5.2.1",
+    "symfony/routing": "^5.3",
+    "topthink/think-orm": "2.0.44",
+    "smalot/pdfparser": "^2.1"
+  },
+  "config": {
+    "secure-http": false
+  }
+}
