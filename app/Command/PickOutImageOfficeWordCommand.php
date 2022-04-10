@@ -38,7 +38,6 @@ class PickOutImageOfficeWordCommand extends Command
         $name = pathinfo($source, PATHINFO_FILENAME);
 
 
-
         try {
             $sections = IOFactory::load($source)
                 ->getSections();
@@ -82,7 +81,7 @@ class PickOutImageOfficeWordCommand extends Command
                             }
                         }
                     }
-                }  else if ($element instanceof Image) {
+                } elseif ($element instanceof Image) {
                     $image = true;
                     $imageDataTmp = $element->getImageStringData(true);
                     $imageType = 'image/jpg';
@@ -105,6 +104,7 @@ class PickOutImageOfficeWordCommand extends Command
                         file_put_contents($imageSrc, base64_decode(explode(',', $imageData)[1]));
                     }
                 }
+
             }
         }
 
@@ -135,15 +135,14 @@ class PickOutImageOfficeWordCommand extends Command
      * @param OutputInterface $output
      * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output) :int
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $path = $input->getArgument('path');
-        $output->writeln("输入路径：".$path);
+        $output->writeln("输入路径：" . $path);
         $files = readPathFiles($path);
-
         foreach ($files as $file) {
             $output->writeln("判断" . basename($file) . " 是否存在图片?");
-            $result = $this->pickOutImageOfficeWord($path.$file);
+            $result = $this->pickOutImageOfficeWord($path . $file);
             if ($result) {
                 $output->writeln(basename($file) . ":包含在图片");
             } else {
