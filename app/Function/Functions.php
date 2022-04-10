@@ -25,7 +25,7 @@ if (!function_exists('readPathFiles')) {
             }
             $extend=pathinfo($file);
             if ($extend['extension'] == $suffix) {
-                $data[] = $file;
+                $data[] = $path.$file;
             }
         }
         return $data;
