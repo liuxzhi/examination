@@ -38,11 +38,9 @@ class PickOutImageOfficeWordCommand extends Command
         $name = pathinfo($source, PATHINFO_FILENAME);
 
         $errorPath = $dirName . "/error_doc/";
-
         if (!is_dir($errorPath)) {
             mkdir($errorPath, 0777);
         }
-
 
 
         try {
@@ -52,7 +50,6 @@ class PickOutImageOfficeWordCommand extends Command
             copy($source, $errorPath . $fileName);
             return false;
         }
-
 
         $image = false;
         foreach ($sections as $section) {
@@ -84,6 +81,28 @@ class PickOutImageOfficeWordCommand extends Command
                                 file_put_contents($imageSrc, base64_decode(explode(',', $imageData)[1]));
                             }
                         }
+                    }
+                }  else if ($element instanceof Image) {
+                    $image = true;
+                    $imageDataTmp = $element->getImageStringData(true);
+                    $imageType = 'image/jpg';
+                    if ($element->getImageType()) {
+                        $imageType = $element->getImageType();
+                    }
+                    $imageData = 'data:' . $imageType . ';base64,' . str_replace(["\r\n", "\r", "\n"], "",
+                            $imageDataTmp);
+                    $wordImageBasePath = $dirName . "/images/";
+                    if (!is_dir($wordImageBasePath)) {
+                        mkdir($wordImageBasePath, 0777);
+                    }
+
+                    $wordImagePath = $dirName . "/images/" . $name . "/";
+                    if (!is_dir($wordImagePath)) {
+                        mkdir($wordImagePath, 0777);
+                    }
+                    $imageSrc = $wordImagePath . md5($element->getSource()) . '.' . $element->getImageExtension();
+                    if (!is_file($imageSrc)) {
+                        file_put_contents($imageSrc, base64_decode(explode(',', $imageData)[1]));
                     }
                 }
             }
