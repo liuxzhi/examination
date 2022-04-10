@@ -142,7 +142,6 @@ class PickOutImageOfficeWordCommand extends Command
         $path = $input->getArgument('path');
         $output->writeln("输入路径：" . $path);
         $files = readPathFiles($path);
-        print_r($files);exit;
         foreach ($files as $file) {
             $output->writeln("判断" . basename($file) . " 是否存在图片?");
             $result = $this->pickOutImageOfficeWord($file);
