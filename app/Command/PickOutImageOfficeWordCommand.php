@@ -9,6 +9,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\Element\TextRun;
 use PhpOffice\PhpWord\Element\Image;
+use throwable;
 
 /**
  * 挑选word中是否含有图片
@@ -35,8 +36,23 @@ class PickOutImageOfficeWordCommand extends Command
         $fileName = basename($source);
         $dirName = dirname($source);
         $name = pathinfo($source, PATHINFO_FILENAME);
-        $sections = IOFactory::load($source)
-            ->getSections();
+
+        $errorPath = $dirName . "/error_doc/";
+
+        if (!is_dir($errorPath)) {
+            mkdir($errorPath, 0777);
+        }
+
+
+
+        try {
+            $sections = IOFactory::load($source)
+                ->getSections();
+        } catch (throwable $throwable) {
+            copy($source, $errorPath . $fileName);
+            return false;
+        }
+
 
         $image = false;
         foreach ($sections as $section) {
