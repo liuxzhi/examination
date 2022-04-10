@@ -23,7 +23,6 @@ class PickOutImageOfficeWordCommand extends Command
         $this->setName('PickOutImageOfficeWordCommand')
             ->setDescription('PickOutImageOfficeWordCommand')
             ->addArgument("path", InputArgument::REQUIRED, "路径为必填项");
-
     }
 
     /**
@@ -36,7 +35,6 @@ class PickOutImageOfficeWordCommand extends Command
         $fileName = basename($source);
         $dirName = dirname($source);
         $name = pathinfo($source, PATHINFO_FILENAME);
-
         $sections = IOFactory::load($source)
             ->getSections();
 
@@ -107,13 +105,14 @@ class PickOutImageOfficeWordCommand extends Command
         $path = $input->getArgument('path');
         $output->writeln("输入路径：".$path);
         $files = readPathFiles($path);
+
         foreach ($files as $file) {
             $output->writeln("判断" . basename($file) . " 是否存在图片?");
-            $result = $this->pickOutImageOfficeWord($file);
+            $result = $this->pickOutImageOfficeWord($path.$file);
             if ($result) {
-                $output->writeln(basename($file) . " 包含在图片");
+                $output->writeln(basename($file) . ":包含在图片");
             } else {
-                $output->writeln(basename($file) . " 不包含在图片");
+                $output->writeln(basename($file) . ":不包含在图片");
             }
         }
         return 1;

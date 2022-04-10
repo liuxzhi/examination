@@ -23,7 +23,8 @@ if (!function_exists('readPathFiles')) {
             if (in_array($file, ['.', '..', '.DS_Store'])) {
                 continue;
             }
-            $data[] = $path . preg_replace('/(\w+)\.' . $suffix . '/', '$1', $file);
+            $data[] = $file;
+            //$data[] = $path . preg_replace('/(\w+)\.' . $suffix . '/', '$1', $file);
         }
         return $data;
     }
