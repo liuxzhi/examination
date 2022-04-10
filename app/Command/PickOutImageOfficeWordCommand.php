@@ -142,7 +142,7 @@ class PickOutImageOfficeWordCommand extends Command
         $files = readPathFiles($path);
         foreach ($files as $file) {
             $output->writeln("判断" . basename($file) . " 是否存在图片?");
-            $result = $this->pickOutImageOfficeWord($path . $file);
+            $result = $this->pickOutImageOfficeWord($file);
             if ($result) {
                 $output->writeln(basename($file) . ":包含在图片");
             } else {
