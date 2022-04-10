@@ -37,16 +37,16 @@ class PickOutImageOfficeWordCommand extends Command
         $dirName = dirname($source);
         $name = pathinfo($source, PATHINFO_FILENAME);
 
-        $errorPath = $dirName . "/error_doc/";
-        if (!is_dir($errorPath)) {
-            mkdir($errorPath, 0777);
-        }
 
 
         try {
             $sections = IOFactory::load($source)
                 ->getSections();
         } catch (throwable $throwable) {
+            $errorPath = $dirName . "/error_doc/";
+            if (!is_dir($errorPath)) {
+                mkdir($errorPath, 0777);
+            }
             copy($source, $errorPath . $fileName);
             return false;
         }
