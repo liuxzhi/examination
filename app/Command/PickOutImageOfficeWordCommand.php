@@ -46,7 +46,9 @@ class PickOutImageOfficeWordCommand extends Command
             if (!is_dir($errorPath)) {
                 mkdir($errorPath, 0777);
             }
-            copy($source, $errorPath . $fileName);
+
+            copy($dirName.$fileName, $errorPath . $fileName);
+
             return false;
         }
 
@@ -140,6 +142,7 @@ class PickOutImageOfficeWordCommand extends Command
         $path = $input->getArgument('path');
         $output->writeln("输入路径：" . $path);
         $files = readPathFiles($path);
+        print_r($files);exit;
         foreach ($files as $file) {
             $output->writeln("判断" . basename($file) . " 是否存在图片?");
             $result = $this->pickOutImageOfficeWord($file);

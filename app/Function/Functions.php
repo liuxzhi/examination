@@ -23,8 +23,10 @@ if (!function_exists('readPathFiles')) {
             if (in_array($file, ['.', '..', '.DS_Store'])) {
                 continue;
             }
-
-            $data[] = $path . preg_replace('/(\w+)\.' . $suffix . '/', '$1', $file);
+            $extend=pathinfo($file);
+            if ($extend['extension'] == $suffix) {
+                $data[] = $file;
+            }
         }
         return $data;
     }
